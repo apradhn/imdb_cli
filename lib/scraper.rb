@@ -10,11 +10,11 @@ class Scraper
     @doc = Nokogiri::HTML(html)
   end
 
-  def scrape_opening
+  def opening
     @openings = @doc.at('.aux-content-widget-2:contains("Opening This Week")').css(".title a").text
   end
 
-  def scrape_now_playing
-    @now_playing = @doc.css(".aux-content-widget-2 .rhs-body .title a")[].text
+  def now_playing
+    @now_playing = @doc.at('.aux-content-widget-2:contains("Now Playing (Box Office)")').css(".title a").text
   end
 end
