@@ -29,7 +29,7 @@ class Movie
     puts "Plot: #{@plot}"
   end
 
-  def you_tube
+  def youtube
     url = "https://www.youtube.com/results?search_query="
     response = open(url + "#{@title.gsub(" ", "+")}+trailer")
     doc = Nokogiri::HTML(response)

@@ -29,7 +29,7 @@ class Omdb
 
   def print_search_results
     @movies.each do |id, movie|
-      puts "#{id}: #{movie.title}"
+      puts "#{id}: #{movie.title} (#{movie.year})"
     end
   end
 

@@ -4,6 +4,12 @@ require_relative "movie.rb"
 require "pry"
 
 class UserInterface
+  attr_accessor :scraper, :omdb
+
+  def initialize
+    @scraper = Scraper.new
+    @omdb = Omdb.new
+  end
 
   def call
     welcome
@@ -47,18 +53,35 @@ class UserInterface
 
   def opening
     puts "Movies opening this week"
+    puts @scraper.opening
   end
 
   def now_playing
     puts "Movies playing this week"
+    puts @scraper.now_playing
   end
 
   def coming_soon
     puts "Movies opening next week"
+    puts @scraper.coming_soon
   end
 
   def search
     puts "Enter the name of the movie you want to look up"
+    command = gets.strip
+    @omdb.search(command)
+    @omdb.print_search_results
+    puts "Enter the number of the movie you want read about"
+    command = gets.strip  
+    movie = @omdb.look_up(command)
+    movie.print_attributes
+    puts "Enter 'trailer' to watch trailer, or any key to leave Search"
+    command = gets.strip
+    if command == "trailer"  
+      movie.youtube
+    else
+      help
+    end
   end
 
   def invalid
