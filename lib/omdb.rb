@@ -28,6 +28,7 @@ class Omdb
   end
 
   def look_up(id)
-    @movies[id.to_i]
+    movie = @movies[id.to_i]
+    movie.json
   end
 end
