@@ -1,5 +1,6 @@
 require "open-uri"
 require "json"
+require "pry"
 
 class Movie
   attr_accessor :title, :year, :id, :runtime, :genre, :director, :writer, :actors,
