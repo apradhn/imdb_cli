@@ -3,5 +3,5 @@ require_relative '../lib/omdb.rb'
 scraper = Scraper.new
 omdb = Omdb.new
 
-puts omdb.search("boot")
+omdb.search("boot")
 
