@@ -1,15 +1,16 @@
 require "open-uri"
 require "json"
 require "pry"
+require_relative "tomatoes"
 
 class Movie
   attr_accessor :title, :year, :id, :runtime, :genre, :director, :writer, :actors,
-  :imdb_rating, :plot
+  :imdb_rating, :plot, :tomatoes
 
   def json
     @id = id
-    url = "http://www.omdbapi.com/?i="    
-    response = open(url+id)
+    url = "http://www.omdbapi.com/?i=#{@id}&tomatoes=true"    
+    response = open(url)
     json = JSON.load(response)
     @runtime = json["Runtime"]
     @genre = json["Genre"]
@@ -18,6 +19,7 @@ class Movie
     @actors = json["Actors"]
     @imdb_rating = json["imdbRating"]
     @plot = json["Plot"]
+    @tomatoes = Tomatoes.new(json)
   end
 
   def print_attributes

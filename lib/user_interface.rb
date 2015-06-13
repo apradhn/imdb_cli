@@ -75,13 +75,19 @@ class UserInterface
     command = gets.strip  
     movie = @omdb.look_up(command)
     movie.print_attributes
-    puts "Enter 'trailer' to watch trailer, or any key to leave Search"
+    puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
     command = gets.strip
-    if command == "trailer"  
-      movie.youtube
-    else
-      help
+    while command != "back"
+      case command
+        when "trailer"  
+          movie.youtube
+        when "tomatoes"
+          movie.tomatoes.print_attributes
+      end
+      puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
+      command = gets.strip
     end
+    help
   end
 
   def invalid
