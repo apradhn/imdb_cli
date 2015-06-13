@@ -11,20 +11,23 @@ class Omdb
   def search(query)
     search = open(@url + "s=#{query.gsub(" ", "%20")}&type=movie")
     @search_results = JSON.load(search)["Search"]
-    @movies = @search_results.collect.with_index(1) do |result, i|
+    @movies = {}
+    @search_results.collect.with_index(1) do |result, i|
       movie = Movie.new
-      movie.search_id = i
       movie.title = result["Title"]
       movie.year = result["Year"]
       movie.id = result["imdbID"]
-      movie
+      @movies[i] = movie
     end
-    print_search_results
   end
 
   def print_search_results
-    @movies.each do |movie|
-      puts "#{movie.search_id}: #{movie.title} (#{movie.year})"
+    @movies.each do |id, movie|
+      puts "#{id}: #{movie.title}"
     end
+  end
+
+  def look_up(id)
+    @movies[id.to_i]
   end
 end
