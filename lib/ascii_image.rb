@@ -1,9 +1,14 @@
 require 'json'
 require 'open-uri'
-require 'google-search/version'
-require 'google-search/item'
-require 'google-search/response'
-require 'google-search/search'
+require 'pry'
+
+class Magick
+
+  class Quantum_Depth
+
+  end
+
+end
 
 class AsciiImage
   def image(query)
@@ -11,11 +16,11 @@ class AsciiImage
     Google::Search::Image.new(:query => query).each do |image|
       results << image.uri
     end
+    create_ascii(results.first)
+  end
 
-    open(results.first) {|f|
-      File.open("images/test.jpg","wb") do |file|
-        file.puts f.read
-      end
-    }
+  def create_ascii(image)
+    ascii = ASCII_Image.new(image)
+    ascii.build(20)
   end
 end

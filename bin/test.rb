@@ -1,4 +1,5 @@
-require_relative '../lib/google_search.rb'
+require_relative '../lib/ascii_image.rb'
+require_relative '../config/environment'
 
-google_search = GoogleSearch.new
-google_search.image("space jam")
+ascii_image = AsciiImage.new
+ascii_image.image("space jam")
