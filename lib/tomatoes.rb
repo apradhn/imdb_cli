@@ -20,5 +20,6 @@ class Tomatoes
     puts "Tomato Image: #{@image}"
     puts "Tomato Rating: #{@rating}"
     puts "Tomato Consensus: #{@consensus}"
+    system("say", @consensus)
   end
 end
