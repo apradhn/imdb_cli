@@ -5,11 +5,16 @@ require "pry"
 
 class UserInterface
   attr_accessor :scraper, :omdb, :width
+  attr_reader :commands, :command_descriptions
 
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
     @width = 75;
+    @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
+    @command_descriptions = ["show list of commands", "show movies opening this week",
+     "show movies playing this week", "show movies opening next week", "search for a movie title",
+     "close application"]
   end
 
   def call
@@ -32,34 +37,36 @@ class UserInterface
       else
         invalid
       end
+      puts "Please enter a command"      
       command = gets.strip
     end
     puts "Goodbye!"
   end
 
   def welcome
-    message = "Welcome to IMDB CLI!"
-    padding = ((width - message.length) / 2) - 1
-    puts "#" * width
-    puts "#" + " "*(width-2) + "#"
-    puts "#" + message.center(width-2) + "#"
-    puts "#"+ " "*(width-2) + "#"
-    puts "#"*width
+    print_divider("* ")
+    print_heading("Welcome to IMDB CLI!", "#")
+    print_divider("* ")
   end
 
   def help
-    puts " "*width
-    commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
-    descriptions = ["show list of commands", "show movies opening this week",
-     "show movies playing this week", "show movies opening next week", "search for a movie title",
-     "close application"]
-    puts "# List of commands #\n".center(width)
+    print_divider("- ")
+    print_heading("List of Commands", "#")
+    print_divider("- ")
     commands.each.with_index do |command, i|
-      print_list_item("+ " + commands[i] + " ", " " + descriptions[i])
+      print_list_item("+ " + commands[i] + " ", " " + command_descriptions[i])
     end
   end
 
+  def print_heading(message, char="#")
+    puts char + " " * (width-2) + char
+    puts char + message.center(width-2) + char
+    puts char + " " * (width-2) + char   
+  end  
 
+  def print_divider(char="#")  
+    puts char.ljust(width, char)
+  end
 
   def opening
     puts "# Movies opening this week:\n\n"
