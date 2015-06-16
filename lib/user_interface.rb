@@ -44,44 +44,30 @@ class UserInterface
   end
 
   def welcome
-    print_divider("* ")
     print_heading("Welcome to IMDB CLI!", "#")
-    print_divider("* ")
   end
 
   def help
-    print_divider("- ")
-    print_heading("List of Commands", "#")
-    print_divider("- ")
+    print_heading("List of Commands", " ")
     commands.each.with_index do |command, i|
-      print_list_item("+ " + commands[i] + " ", " " + command_descriptions[i])
+      print_list_item(" " + commands[i] + " ", " " + command_descriptions[i])
     end
   end
 
-  def print_heading(message, char="#")
-    puts char + " " * (width-2) + char
-    puts char + message.center(width-2) + char
-    puts char + " " * (width-2) + char   
-  end  
-
-  def print_divider(char="#")  
-    puts char.ljust(width, char)
-  end
-
   def opening
-    puts "# Movies opening this week:\n\n"
+    print_heading("Movies opening this week", "+")
     titles = @scraper.opening
     print_titles(titles)
   end
 
   def now_playing
-    puts "# Movies playing this week:\n\n"
+    print_heading("Movies playing this week", "+")     
     titles = @scraper.now_playing
     print_titles(titles)
   end
 
   def coming_soon
-    puts "Movies opening next week:\n\n"
+    print_heading("Movies opening next week", "+") 
     titles = @scraper.coming_soon
     print_titles(titles)   
   end
@@ -89,8 +75,8 @@ class UserInterface
   def search
     puts "Enter the name of the movie you want to look up"
     command = gets.strip
-    @omdb.search(command)
-    @omdb.print_search_results
+    print_search_results(command)
+
     puts "Enter the number of the movie you want read about"
     command = gets.strip  
     movie = @omdb.look_up(command)
@@ -114,6 +100,13 @@ class UserInterface
     puts "That is not a valid command. Please try again"
   end
 
+  def print_search_results(command)
+    @omdb.search(command)
+    @omdb.movies.each do |id, movie|
+      puts "#{id}: #{movie.title} (#{movie.year})"
+      print_divider("-")
+    end     
+  end  
 
   def print_list_item(command, description="")
     padding = width - (command.length + description.length) 
@@ -130,4 +123,16 @@ class UserInterface
       print_list_item("#{i+1}. " + title)
     end     
   end
+
+  def print_heading(message, char="#")
+    print_divider(char+" ")
+    puts char + " " * (width-2) + char
+    puts char + message.center(width-2) + char
+    puts char + " " * (width-2) + char   
+    print_divider(char+" ")    
+  end  
+
+  def print_divider(char="#")  
+    puts char.ljust(width, char)
+  end  
 end
