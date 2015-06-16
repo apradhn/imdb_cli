@@ -42,7 +42,7 @@ class UserInterface
     padding = ((self.width - message.length) / 2) - 1
     puts "#" * self.width
     puts "#" + " "*(self.width-2) + "#"
-    puts "#" + " " * padding + message + " " * padding + "#"
+    puts "#" + message.center(self.width-2) + "#"
     puts "#"+ " "*(self.width-2) + "#"
     puts "#"*self.width
   end
@@ -53,15 +53,15 @@ class UserInterface
     descriptions = ["show list of commands", "show movies opening this week",
      "show movies playing this week", "show movies opening next week", "search for a movie title",
      "close application"]
-    puts "<-- List of commands -->".center(self.width)
+    puts "# List of commands #\n".center(self.width)
     commands.each.with_index do |command, i|
-      print_list_item("+ " + commands[i], descriptions[i] + " +")
+      print_list_item("  " + commands[i] + " ", " " + descriptions[i])
     end
   end
 
   def print_list_item(command, description)
     padding = self.width - (command.length + description.length)  
-    puts command.ljust(padding + command.length) + description      
+    puts command.ljust(0.5 * self.width, ". ") + description      
   end
 
   def opening
