@@ -3,7 +3,7 @@ require_relative 'omdb.rb'
 class Tomatoes
   attr_accessor :meter, :image, :rating, :consensus
 
-  def initialize(json)
+  def initialize(json="")
     @json = json
     set_attributes
   end

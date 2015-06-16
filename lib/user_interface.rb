@@ -78,11 +78,10 @@ class UserInterface
     command = gets.strip
     print_search_results(command)
 
-    puts "Enter the number of the movie you want read about"
+    puts "Enter the number of the movie you want to read about"
     command = gets.strip  
     movie = @omdb.look_up(command)
     print_profile(movie)
-    # movie.print_attributes
     puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
     command = gets.strip
     while command != "back"
@@ -90,7 +89,8 @@ class UserInterface
         when "trailer"  
           movie.youtube
         when "tomatoes"
-          movie.tomatoes.print_attributes
+          # movie.tomatoes.print_attributes
+          print_tomatoes(movie.tomatoes, movie.title)
       end
       puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
       command = gets.strip
@@ -102,15 +102,26 @@ class UserInterface
     puts "That is not a valid command. Please try again"
   end
 
+  def print_tomatoes(tomatoes, title)
+    print_heading(title)
+    puts " " * padding + "Tomato Meter: #{tomatoes.meter}"
+    puts " " * padding + "Tomato Image: #{tomatoes.image}"
+    puts " " * padding + "Tomato Rating: #{tomatoes.rating}"
+    print_divider("-")
+    puts " " * padding + "Tomato Consensus:"
+    puts parse_paragraph(tomatoes.consensus)
+    print_divider("-")
+    system("say", tomatoes.consensus)      
+  end  
+
   def print_profile(movie)
-    print_divider("-") 
-    puts " " * padding + movie.title + "\n\n"
+    print_heading(movie.title)
     puts " " * padding +  "Year: #{movie.year}"
     puts " " * padding +  "Run Time: #{movie.runtime}"
     puts " " * padding +  "Genre(s): #{movie.genre}"
     puts " " * padding +  "IMDB Rating: #{movie.imdb_rating}"  
     print_divider("-") 
-    puts parse_plot(movie.plot, padding)
+    puts parse_paragraph(movie.plot)
     print_divider("-")
   end
 
@@ -150,7 +161,7 @@ class UserInterface
     puts " " * padding + char.ljust(width, char)
   end  
 
-  def parse_plot(plot, padding)
+  def parse_paragraph(plot)
     plot = " " * padding + plot
     line_width = width
     line_count = plot.length / width
