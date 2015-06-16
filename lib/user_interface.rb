@@ -39,34 +39,42 @@ class UserInterface
 
   def welcome
     message = "Welcome to IMDB CLI!"
-    padding = ((self.width - message.length) / 2) - 1
-    puts "#" * self.width
-    puts "#" + " "*(self.width-2) + "#"
-    puts "#" + message.center(self.width-2) + "#"
-    puts "#"+ " "*(self.width-2) + "#"
-    puts "#"*self.width
+    padding = ((width - message.length) / 2) - 1
+    puts "#" * width
+    puts "#" + " "*(width-2) + "#"
+    puts "#" + message.center(width-2) + "#"
+    puts "#"+ " "*(width-2) + "#"
+    puts "#"*width
   end
 
   def help
-    puts " "*self.width
+    puts " "*width
     commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
     descriptions = ["show list of commands", "show movies opening this week",
      "show movies playing this week", "show movies opening next week", "search for a movie title",
      "close application"]
-    puts "# List of commands #\n".center(self.width)
+    puts "# List of commands #\n".center(width)
     commands.each.with_index do |command, i|
-      print_list_item("  " + commands[i] + " ", " " + descriptions[i])
+      print_list_item("+ " + commands[i] + " ", " " + descriptions[i])
     end
   end
 
-  def print_list_item(command, description)
-    padding = self.width - (command.length + description.length)  
-    puts command.ljust(0.5 * self.width, ". ") + description      
+  def print_list_item(command, description="")
+    padding = width - (command.length + description.length) 
+    if description != "" 
+      puts (command.ljust(0.5 * width, ". ") + description )  
+    else
+      puts command.ljust(0.5 * width)
+      puts "-" * width
+    end   
   end
 
   def opening
-    puts "Movies opening this week"
-    puts @scraper.opening
+    puts "Movies opening this week:\n\n"
+    openings = @scraper.opening.split("\n").delete_if{|title| title == ""}
+    openings.each.with_index do |title, i|
+      print_list_item("#{i+1}. " + title)
+    end
   end
 
   def now_playing

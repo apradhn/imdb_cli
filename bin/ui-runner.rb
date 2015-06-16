@@ -4,3 +4,5 @@ ui = UserInterface.new
 ui.welcome
 
 ui.help
+
+ui.opening
