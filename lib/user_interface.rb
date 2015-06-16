@@ -59,35 +59,24 @@ class UserInterface
     end
   end
 
-  def print_list_item(command, description="")
-    padding = width - (command.length + description.length) 
-    if description != "" 
-      puts (command.ljust(0.5 * width, ". ") + description )  
-    else
-      puts command.ljust(0.5 * width)
-      puts "-" * width
-    end   
-  end
+
 
   def opening
     puts "# Movies opening this week:\n\n"
-    openings = @scraper.opening
-    openings.each.with_index do |title, i|
-      print_list_item("#{i+1}. " + title)
-    end
+    titles = @scraper.opening
+    print_titles(titles)
   end
 
   def now_playing
     puts "# Movies playing this week:\n\n"
-    now_playing = @scraper.now_playing
-    now_playing.each.with_index do |title, i|
-      print_list_item("#{i+1}. " + title)
-    end
+    titles = @scraper.now_playing
+    print_titles(titles)
   end
 
   def coming_soon
-    puts "Movies opening next week"
-    puts @scraper.coming_soon
+    puts "Movies opening next week:\n\n"
+    titles = @scraper.coming_soon
+    print_titles(titles)   
   end
 
   def search
@@ -116,5 +105,22 @@ class UserInterface
 
   def invalid
     puts "That is not a valid command. Please try again"
+  end
+
+
+  def print_list_item(command, description="")
+    padding = width - (command.length + description.length) 
+    if description != "" 
+      puts (command.ljust(0.5 * width, ". ") + description )  
+    else
+      puts command.ljust(0.5 * width)
+      puts "-" * width
+    end   
+  end
+
+  def print_titles(titles)
+    titles.each.with_index do |title, i|
+      print_list_item("#{i+1}. " + title)
+    end     
   end
 end
