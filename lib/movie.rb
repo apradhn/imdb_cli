@@ -22,15 +22,6 @@ class Movie
     @tomatoes = Tomatoes.new(json)
   end
 
-  def print_attributes
-    puts "Title: #{@title}"
-    puts "Year: #{@year}"
-    puts "Runtime: #{@runtime}"
-    puts "Genre: #{@genre}"
-    puts "IMDB rating: #{@imdb_rating}"
-    puts "Plot: #{@plot}"
-  end
-
   def youtube
     url = "https://www.youtube.com/results?search_query="
     response = open(url + "#{@title.gsub(" ", "+")}+trailer")

@@ -4,13 +4,14 @@ require_relative "movie.rb"
 require "pry"
 
 class UserInterface
-  attr_accessor :scraper, :omdb, :width
+  attr_accessor :scraper, :omdb, :width, :padding
   attr_reader :commands, :command_descriptions
 
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
     @width = 75;
+    @padding = 5;
     @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
     @command_descriptions = ["show list of commands", "show movies opening this week",
      "show movies playing this week", "show movies opening next week", "search for a movie title",
@@ -50,7 +51,7 @@ class UserInterface
   def help
     print_heading("List of Commands", " ")
     commands.each.with_index do |command, i|
-      print_list_item(" " + commands[i] + " ", " " + command_descriptions[i])
+      print_list_item(" " * padding + commands[i] + " ", " " + command_descriptions[i], ". ")
     end
   end
 
@@ -80,7 +81,8 @@ class UserInterface
     puts "Enter the number of the movie you want read about"
     command = gets.strip  
     movie = @omdb.look_up(command)
-    movie.print_attributes
+    print_profile(movie)
+    # movie.print_attributes
     puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
     command = gets.strip
     while command != "back"
@@ -100,6 +102,16 @@ class UserInterface
     puts "That is not a valid command. Please try again"
   end
 
+  def print_profile(movie)
+    puts " " * padding + movie.title + "\n\n"
+    puts " " * padding +  "Year: #{movie.year}"
+    puts " " * padding +  "Run Time: #{movie.runtime}"
+    puts " " * padding +  "Genre(s): #{movie.genre}"
+    puts " " * padding +  "IMDB Rating: #{movie.imdb_rating}"    
+    puts ""
+    puts parse_plot(movie.plot, padding)
+  end
+
   def print_search_results(command)
     @omdb.search(command)
     @omdb.movies.each do |id, movie|
@@ -108,13 +120,12 @@ class UserInterface
     end     
   end  
 
-  def print_list_item(command, description="")
-    padding = width - (command.length + description.length) 
-    if description != "" 
-      puts (command.ljust(0.5 * width, ". ") + description )  
+  def print_list_item(label, item="", char=" ")
+    if item != "" 
+      puts (label.ljust(0.5 * width, char) + " " + item )  
     else
-      puts command.ljust(0.5 * width)
-      puts "-" * width
+      puts " " * padding + label.ljust(0.5 * width)
+      puts " " * padding + "-" * width
     end   
   end
 
@@ -126,13 +137,25 @@ class UserInterface
 
   def print_heading(message, char="#")
     print_divider(char+" ")
-    puts char + " " * (width-2) + char
-    puts char + message.center(width-2) + char
-    puts char + " " * (width-2) + char   
-    print_divider(char+" ")    
+    puts " " * padding + char + " " * (width-2) + char
+    puts " " * padding + char + message.center(width-2) + char
+    puts " " * padding + char + " " * (width-2) + char   
+    print_divider(char+" ") 
+    puts ""   
   end  
 
   def print_divider(char="#")  
-    puts char.ljust(width, char)
+    puts " " * padding + char.ljust(width, char)
   end  
+
+  def parse_plot(plot, padding)
+    plot = " " * padding + plot
+    line_width = width - padding
+    line_count = plot.length / width
+    line_index = plot.length / line_count
+    line_count.times do |i| 
+      plot.insert(line_width * (i+1), "\n" + " " * padding)
+    end
+    plot
+  end
 end

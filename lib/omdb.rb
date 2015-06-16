@@ -27,12 +27,6 @@ class Omdb
     
   end
 
-  def print_search_results
-    @movies.each do |id, movie|
-      puts "#{id}: #{movie.title} (#{movie.year})"
-    end
-  end
-
   def look_up(id)
     movie = @movies[id.to_i]
     movie.json
