@@ -9,7 +9,7 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    @width = 50;
+    @width = 75;
   end
 
   def call
@@ -48,14 +48,20 @@ class UserInterface
   end
 
   def help
-    puts "List of commands"
-    puts "help --- show list of commands"
-    puts "opening --- show movies opening this week"
-    puts "now playing --- show movies playing this week"
-    puts "coming soon --- show movies coming next week"
-    puts "search --- search for a movie title"
-    puts "exit --- close application"
-    puts "______________________________________________"
+    puts " "*self.width
+    commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
+    descriptions = ["show list of commands", "show movies opening this week",
+     "show movies playing this week", "show movies opening next week", "search for a movie title",
+     "close application"]
+    puts "<-- List of commands -->".center(self.width)
+    commands.each.with_index do |command, i|
+      print_list_item("+ " + commands[i], descriptions[i] + " +")
+    end
+  end
+
+  def print_list_item(command, description)
+    padding = self.width - (command.length + description.length)  
+    puts command.ljust(padding + command.length) + description      
   end
 
   def opening
