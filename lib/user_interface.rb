@@ -4,11 +4,12 @@ require_relative "movie.rb"
 require "pry"
 
 class UserInterface
-  attr_accessor :scraper, :omdb
+  attr_accessor :scraper, :omdb, :width
 
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
+    @width = 50;
   end
 
   def call
@@ -37,7 +38,13 @@ class UserInterface
   end
 
   def welcome
-    puts "Welcome to IMDB CLI!"
+    message = "Welcome to IMDB CLI!"
+    padding = ((self.width - message.length) / 2) - 1
+    puts "#" * self.width
+    puts "#" + " "*(self.width-2) + "#"
+    puts "#" + " " * padding + message + " " * padding + "#"
+    puts "#"+ " "*(self.width-2) + "#"
+    puts "#"*self.width
   end
 
   def help
