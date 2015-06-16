@@ -103,19 +103,21 @@ class UserInterface
   end
 
   def print_profile(movie)
+    print_divider("-") 
     puts " " * padding + movie.title + "\n\n"
     puts " " * padding +  "Year: #{movie.year}"
     puts " " * padding +  "Run Time: #{movie.runtime}"
     puts " " * padding +  "Genre(s): #{movie.genre}"
-    puts " " * padding +  "IMDB Rating: #{movie.imdb_rating}"    
-    puts ""
+    puts " " * padding +  "IMDB Rating: #{movie.imdb_rating}"  
+    print_divider("-") 
     puts parse_plot(movie.plot, padding)
+    print_divider("-")
   end
 
   def print_search_results(command)
     @omdb.search(command)
     @omdb.movies.each do |id, movie|
-      puts "#{id}: #{movie.title} (#{movie.year})"
+      puts " " * padding + "#{id}: #{movie.title} (#{movie.year})"
       print_divider("-")
     end     
   end  
@@ -150,7 +152,7 @@ class UserInterface
 
   def parse_plot(plot, padding)
     plot = " " * padding + plot
-    line_width = width - padding
+    line_width = width
     line_count = plot.length / width
     line_index = plot.length / line_count
     line_count.times do |i| 

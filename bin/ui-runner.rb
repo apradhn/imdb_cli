@@ -16,7 +16,7 @@ movie = Movie.new.tap do |movie|
   movie.plot = "In a corrupt, greed-fueled world, a powerful alchemist leads a Christ-like character and seven materialistic figures to the Holy Mountain, where they hope to achieve enlightenment."
 end
 
-# ui.print_profile(movie)
-ui.now_playing
-ui.opening
-ui.coming_soon
+ui.print_profile(movie)
+# ui.now_playing
+# ui.opening
+# ui.coming_soon
