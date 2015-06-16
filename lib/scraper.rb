@@ -21,6 +21,7 @@ class Scraper
   end
 
   def coming_soon
-    @coming_soon = @doc.at('.aux-content-widget-2:contains("Coming Soon")').css(".title a").text
+    scrape = @doc.at('.aux-content-widget-2:contains("Coming Soon")').css(".title a").text
+    movies = scrape.split("\n").delete_if{|title| title == ""}
   end
 end
