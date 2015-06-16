@@ -70,16 +70,19 @@ class UserInterface
   end
 
   def opening
-    puts "Movies opening this week:\n\n"
-    openings = @scraper.opening.split("\n").delete_if{|title| title == ""}
+    puts "# Movies opening this week:\n\n"
+    openings = @scraper.opening
     openings.each.with_index do |title, i|
       print_list_item("#{i+1}. " + title)
     end
   end
 
   def now_playing
-    puts "Movies playing this week"
-    puts @scraper.now_playing
+    puts "# Movies playing this week:\n\n"
+    now_playing = @scraper.now_playing
+    now_playing.each.with_index do |title, i|
+      print_list_item("#{i+1}. " + title)
+    end
   end
 
   def coming_soon

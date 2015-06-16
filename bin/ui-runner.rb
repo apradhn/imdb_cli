@@ -6,3 +6,5 @@ ui.welcome
 ui.help
 
 ui.opening
+
+ui.now_playing
