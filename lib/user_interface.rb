@@ -10,7 +10,7 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    @width = 75; # recommended to set width to an odd number
+    @width = 101; # recommended to set width to an odd number
     @padding = 5;
     @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
     @command_descriptions = ["show list of commands", "show movies opening this week",
@@ -92,7 +92,7 @@ class UserInterface
 
     movie = @omdb.look_up(command)
     print_profile(movie)
-    puts " " * padding + "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search".ljust(width - padding)
+    puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
     print " " * padding    
     command = gets.strip
 
@@ -104,7 +104,7 @@ class UserInterface
           # movie.tomatoes.print_attributes
           print_tomatoes(movie.tomatoes, movie.title)
       end
-      puts " " * padding + "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search".ljust(width - padding)
+      puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
       print " " * padding    
       command = gets.strip
     end
@@ -175,13 +175,13 @@ class UserInterface
     puts " " * padding + char.ljust(width, char)
   end  
 
-  def parse_paragraph(plot)
-    plot = " " * padding + plot
-    line_count = plot.length / width
+  def parse_paragraph(text)
+    text = " " * padding + text
+    line_count = text.length / width
     line_count.times do |i| 
-      plot.insert(width * (i+1), "\n" + " " * padding)
+      text.insert(width * (i+1), "\n" + " " * padding)
     end
-    plot
+    text
   end
 
   def clear_screen
