@@ -5,7 +5,7 @@ require_relative "../config/environment.rb"
 require_relative "concerns/printable.rb"
 
 class UserInterface
-  attr_accessor :scraper, :omdb, :width, :padding
+  attr_accessor :scraper, :omdb
   attr_reader :commands, :command_descriptions
   include Printable::InstanceMethods
 
@@ -13,17 +13,24 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
-    @command_descriptions = ["show list of commands", "show movies opening this week",
-     "show movies playing this week", "show movies opening next week", "search for a movie title",
-     "close application"]
+    # @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
+    # @command_descriptions = ["show list of commands", "show movies opening this week",
+    #  "show movies playing this week", "show movies opening next week", "search for a movie title",
+    #  "close application"]
+     @commands = {
+      help: "show list of commands",
+      opening: "show movies opening this week",
+      now_playing:  "show movies playing this week",
+      coming_soon: "show movies opening next week",
+      search: "search for a movie title",
+      exit: "close application"
+     }
   end
 
   def call
     welcome
     help
-    prompt_user
-    # puts "Please enter a command"
+    prompt_user("Please enter a command (type \"help\" to see a list of commands)")
     command = gets.strip
     while command != "exit"
       case command
@@ -40,10 +47,10 @@ class UserInterface
       else
         invalid
       end
-      prompt_user
+      prompt_user("Please enter a command (type \"help\" to see a list of commands)")
       command = gets.strip
     end
-    puts " " * padding + "Goodbye!"
+    print_line("Goodbye!")
   end
 
   def welcome
@@ -52,15 +59,7 @@ class UserInterface
 
   def help
     print_heading("List of Commands", " ")
-    commands.each.with_index do |command, i|
-      print_list_item(" " * padding + commands[i] + " ", " " + command_descriptions[i], ". ")
-    end
-    print_divider("-")
-  end
-
-  def prompt_user
-    puts " "*padding + "Please enter a command (type \"help\" to see a list of commands)"
-    print " "*padding
+    print_hash(commands)
   end
 
   def opening

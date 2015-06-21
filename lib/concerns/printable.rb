@@ -63,7 +63,23 @@ module Printable
       puts parse_paragraph(tomatoes.consensus)
       print_divider("-")
       tomatoes.speak(tomatoes.consensus)
-    end          
+    end   
+
+    def prompt_user(text)
+      puts " "*PADDING + "Please enter a command (type \"help\" to see a list of commands)"
+      print " "*PADDING
+    end
+
+    def print_line(text)
+      puts " " * PADDING + text
+    end
+
+    def print_hash(hash)
+      hash.each do |key, value|
+        print_list_item(" " * PADDING + key.to_s.gsub("_", " ") + " ", " " + value, ". ")
+      end
+      print_divider("-")          
+    end
 
   end
 end
