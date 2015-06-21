@@ -90,13 +90,15 @@ class UserInterface
 
     while command != "back"
       case command
-        when "trailer"  
-          movie.youtube
-        when "tomatoes"
-          print_tomatoes(movie.tomatoes, movie.title)
-        when "exit"
-          break
+      when "trailer"  
+        movie.youtube
+      when "tomatoes"
+        print_tomatoes(movie.tomatoes, movie.title)
+      else
+        print_profile(movie)        
+        invalid
       end
+
       puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
       print " " * padding    
       command = gets.strip
@@ -117,7 +119,9 @@ class UserInterface
   end
 
   def invalid
-    puts "!! That is not a valid command. Please try again !!".center(width - padding*2)
+    print_divider("! ")
+    puts "That is not a valid command. Please try again".center(width + padding*2)
+    print_divider("! ")
   end
 
   def print_tomatoes(tomatoes, title)
