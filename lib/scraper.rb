@@ -1,6 +1,5 @@
-require 'nokogiri'
-require 'open-uri'
-require 'pry'
+require_relative "../config/environment.rb"
+# require 'open-uri'
 class Scraper
   attr_reader :doc
 

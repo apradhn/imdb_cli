@@ -1,7 +1,7 @@
 require_relative "omdb.rb"
 require_relative "scraper.rb"
 require_relative "movie.rb"
-require "pry"
+require_relative "../config/environment.rb"
 
 class UserInterface
   attr_accessor :scraper, :omdb, :width, :padding

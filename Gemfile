@@ -2,6 +2,7 @@
 source "https://rubygems.org"
 
 # gem "rails"
-gem 'google-search'
+# gem 'google-search'
 gem 'pry'
-gem 'rmagick'
+gem 'nokogiri'
+# gem 'rmagick'

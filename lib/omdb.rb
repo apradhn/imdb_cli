@@ -1,5 +1,6 @@
-require 'open-uri'
-require 'JSON'
+# require 'open-uri'
+# require 'JSON'
+require_relative "../config/environment.rb"
 require_relative "movie.rb"
 
 class Omdb
