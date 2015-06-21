@@ -13,8 +13,6 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    @width = 101; # recommended to set width to an odd number
-    @padding = 5;
     @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
     @command_descriptions = ["show list of commands", "show movies opening this week",
      "show movies playing this week", "show movies opening next week", "search for a movie title",
