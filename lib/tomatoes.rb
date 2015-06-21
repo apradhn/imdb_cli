@@ -15,11 +15,16 @@ class Tomatoes
     @consensus = @json["tomatoConsensus"]
   end
 
-  def print_attributes
-    puts "Tomato Meter: #{@meter}"
-    puts "Tomato Image: #{@image}"
-    puts "Tomato Rating: #{@rating}"
-    puts "Tomato Consensus: #{@consensus}"
-    system("say", @consensus)
+  # def print_attributes
+  #   puts "Tomato Meter: #{@meter}"
+  #   puts "Tomato Image: #{@image}"
+  #   puts "Tomato Rating: #{@rating}"
+  #   puts "Tomato Consensus: #{@consensus}"
+  #   speak(@consensus)
+  # end
+
+  def speak(message)
+    system("say", message)
   end
+  
 end

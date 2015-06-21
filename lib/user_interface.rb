@@ -10,7 +10,7 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    @width = 75;
+    @width = 75; # recommended to set width to an odd number
     @padding = 5;
     @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
     @command_descriptions = ["show list of commands", "show movies opening this week",
@@ -38,7 +38,7 @@ class UserInterface
       else
         invalid
       end
-      puts "Please enter a command"      
+      puts "Please enter a command (type \"help\" to see a list of commands)"      
       command = gets.strip
     end
     puts "Goodbye!"
@@ -74,15 +74,15 @@ class UserInterface
   end
 
   def search
-    puts "Enter the name of the movie you want to look up"
+    puts " " * padding + "Enter the name of the movie you want to look up".ljust(width - padding)
     command = gets.strip
     print_search_results(command)
 
-    puts "Enter the number of the movie you want to read about"
+    puts " " * padding + "Enter the number of the movie you want to read about".ljust(width - padding)
     command = gets.strip  
     movie = @omdb.look_up(command)
     print_profile(movie)
-    puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
+    puts " " * padding + "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search".ljust(width - padding)
     command = gets.strip
     while command != "back"
       case command
@@ -92,14 +92,14 @@ class UserInterface
           # movie.tomatoes.print_attributes
           print_tomatoes(movie.tomatoes, movie.title)
       end
-      puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
+      puts " " * padding + "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search".ljust(width - padding)
       command = gets.strip
     end
     help
   end
 
   def invalid
-    puts "That is not a valid command. Please try again"
+    puts " " * padding + "!! That is not a valid command. Please try again !!".ljust(width - padding)
   end
 
   def print_tomatoes(tomatoes, title)
@@ -111,7 +111,7 @@ class UserInterface
     puts " " * padding + "Tomato Consensus:"
     puts parse_paragraph(tomatoes.consensus)
     print_divider("-")
-    system("say", tomatoes.consensus)      
+    tomatoes.speak(tomatoes.consensus)
   end  
 
   def print_profile(movie)
@@ -143,9 +143,10 @@ class UserInterface
   end
 
   def print_titles(titles)
-    titles.each.with_index do |title, i|
-      print_list_item("#{i+1}. " + title)
-    end     
+    titles.each_with_index do |t, i|
+      puts " "*padding + "#{i+1}. #{t.text}"
+      print_divider("-")
+    end  
   end
 
   def print_heading(message, char="#")
@@ -163,12 +164,16 @@ class UserInterface
 
   def parse_paragraph(plot)
     plot = " " * padding + plot
-    line_width = width
     line_count = plot.length / width
-    line_index = plot.length / line_count
+    # binding.pry
+    # line_index = plot.length / line_count
     line_count.times do |i| 
-      plot.insert(line_width * (i+1), "\n" + " " * padding)
+      plot.insert(width * (i+1), "\n" + " " * padding)
     end
     plot
+  end
+
+  def clear_screen
+    system("clear")
   end
 end

@@ -11,17 +11,14 @@ class Scraper
   end
 
   def opening
-    scrape = @doc.at('.aux-content-widget-2:contains("Opening This Week")').css(".title a").text
-    movies = scrape.split("\n").delete_if{|title| title == ""}
+    scrape = @doc.at('.aux-content-widget-2:contains("Opening This Week")').css(".title a")
   end
 
   def now_playing
-   scrape = @doc.at('.aux-content-widget-2:contains("Now Playing (Box Office)")').css(".title a").text
-   movies = scrape.split("\n").delete_if{|title| title == ""}
+   scrape = @doc.at('.aux-content-widget-2:contains("Now Playing (Box Office)")').css(".title a")
   end
 
   def coming_soon
-    scrape = @doc.at('.aux-content-widget-2:contains("Coming Soon")').css(".title a").text
-    movies = scrape.split("\n").delete_if{|title| title == ""}
+    scrape = @doc.at('.aux-content-widget-2:contains("Coming Soon")').css(".title a")
   end
 end
