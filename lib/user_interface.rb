@@ -1,14 +1,10 @@
-require_relative "omdb.rb"
-require_relative "scraper.rb"
-require_relative "movie.rb"
-require "pry"
-
 class UserInterface
   attr_accessor :scraper, :omdb
 
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
+    @showtimes = Showtimes.new
   end
 
   def call
@@ -59,6 +55,14 @@ class UserInterface
   def now_playing
     puts "Movies playing this week"
     puts @scraper.now_playing
+    puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+    command = gets.strip
+    while command != "back"
+      @showtimes.showtimes(command)
+      puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+      command = gets.strip
+    end
+    help
   end
 
   def coming_soon
@@ -72,14 +76,14 @@ class UserInterface
     @omdb.search(command)
     @omdb.print_search_results
     puts "Enter the number of the movie you want read about"
-    command = gets.strip  
+    command = gets.strip
     movie = @omdb.look_up(command)
     movie.print_attributes
     puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
     command = gets.strip
     while command != "back"
       case command
-        when "trailer"  
+        when "trailer"
           movie.youtube
         when "tomatoes"
           movie.tomatoes.print_attributes

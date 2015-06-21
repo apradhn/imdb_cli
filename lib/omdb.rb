@@ -1,7 +1,3 @@
-require 'open-uri'
-require 'JSON'
-require_relative "movie.rb"
-
 class Omdb
   attr_accessor :movies
   def initialize
@@ -24,7 +20,7 @@ class Omdb
       movie.id = result["imdbID"]
       @movies[i] = movie
     end
-    
+
   end
 
   def print_search_results
