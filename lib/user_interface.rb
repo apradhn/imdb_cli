@@ -2,10 +2,13 @@ require_relative "omdb.rb"
 require_relative "scraper.rb"
 require_relative "movie.rb"
 require_relative "../config/environment.rb"
+require_relative "concerns/printable.rb"
 
 class UserInterface
   attr_accessor :scraper, :omdb, :width, :padding
   attr_reader :commands, :command_descriptions
+  include Printable::InstanceMethods
+
 
   def initialize
     @scraper = Scraper.new
@@ -184,10 +187,6 @@ class UserInterface
     puts " " * padding + char + " " * (width-2) + char   
     print_divider(char+" ") 
     puts ""   
-  end  
-
-  def print_divider(char="#")  
-    puts " " * padding + char.ljust(width, char)
   end  
 
   def parse_paragraph(text)
