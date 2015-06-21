@@ -114,6 +114,12 @@ class UserInterface
     puts " " * padding + "Enter the number of the movie you want to read about".ljust(width - padding)
     print " " * padding    
     command = gets.strip  
+    # binding.pry
+    while command.to_i == 0
+      invalid
+      command = gets.strip
+    end
+
     movie = @omdb.look_up(command)    
   end
 
@@ -121,6 +127,7 @@ class UserInterface
     print_divider("! ")
     puts "That is not a valid command. Please try again".center(width + padding*2)
     print_divider("! ")
+    print " "*padding
   end
 
   def print_tomatoes(tomatoes, title)
