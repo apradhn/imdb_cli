@@ -1,5 +1,6 @@
 class Showtimes
   attr_reader :doc
+  include Printable::InstanceMethods
 
   def initialize
     @url = "http://www.google.com/movies?near=New+York%2C+NY"
@@ -14,9 +15,10 @@ class Showtimes
         name = movie.css('.name').text
         if name.downcase == movie_name.downcase
           result_count += 1
-          puts theater.css('h2.name').text
+          print_heading(theater.css('h2.name').text)
           movie.css('.times a').each {|time|
-            puts time.text
+            puts parse_paragraph(time.text)
+            print_divider("-")
           }
         end
       }

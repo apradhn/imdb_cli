@@ -1,14 +1,20 @@
-Intro
-- :30
-Problem: What could we build with our current knowledge?
-Answer: Scraping CLI for IMDB
-Reason: Both liked the scraping labs, and we wanted to get more comfortable with scraping and using
-APIs. IMDB because it was fun and offered a lot of possibilities. And we both like movies!
+# Intro
 
-Demo
-- 1:00
+## Problem: What could we build with our current knowledge?
+- We couldn't build a website
+- Covered scraping and Object Oriented Design
+- Several labs involved Comman Line Interfaces
 
-Implementation
+## Solution: IMDB CLI
+ - We both like movies
+ - Scrapes the IMDB home page for movie listings
+ - Collects information about movie titles from OMDB api
+ - Provides User Interaction through a Command Line Interface
+
+## Demo
+
+# Implementation
+
 - scraper
   - scrapes the imdb home page
   - divided into opening, now playing, coming soon

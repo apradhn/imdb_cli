@@ -62,11 +62,11 @@ class UserInterface
   def now_playing
     print_heading("Movies playing this week", "+")     
     print_titles(@scraper.now_playing)
-    puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+    prompt_user("Enter a movie title for showtimes, or 'back' to return to main menu")
     command = gets.strip
     while command != "back"
       @showtimes.showtimes(command)
-      puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+      prompt_user("Enter a movie title for showtimes, or 'back' to return to main menu")
       command = gets.strip
     end
     help
