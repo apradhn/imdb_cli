@@ -84,26 +84,25 @@ class UserInterface
     movie = get_search_results
     print_profile(movie)
 
-    puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
-    print " " * padding    
-    command = gets.strip
-
-    while command != "back"
-      case command
-      when "trailer"  
+    command = ""
+    valid_commands = ["back", "trailer", "tomatoes"]
+    while command != "back" 
+      puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
+      print " " * padding         
+      command = gets.strip
+      if command == "trailer"
         movie.youtube
-      when "tomatoes"
+      elsif command == "tomatoes"
         print_tomatoes(movie.tomatoes, movie.title)
-      else
-        print_profile(movie)        
+      elsif !(valid_command?(command, valid_commands))
         invalid
       end
-
-      puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
-      print " " * padding    
-      command = gets.strip
     end
     help
+  end
+
+  def valid_command?(command, valid_commands)
+    valid_commands.include?(command)
   end
 
   def get_search_results
