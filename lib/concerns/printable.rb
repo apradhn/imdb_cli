@@ -66,7 +66,7 @@ module Printable
     end   
 
     def prompt_user(text)
-      puts " "*PADDING + "Please enter a command (type \"help\" to see a list of commands)"
+      puts " "*PADDING + text
       print " "*PADDING
     end
 
@@ -84,6 +84,14 @@ module Printable
       end
       print_divider("-")          
     end
+
+  def print_search_results(command, omdb)
+    omdb.search(command)
+    omdb.movies.each do |id, movie|
+      puts " " * PADDING + "#{id}: #{movie.title} (#{movie.year})"
+      print_divider("-")
+    end     
+  end      
 
   end
 end

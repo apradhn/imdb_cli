@@ -106,13 +106,12 @@ class UserInterface
   end
 
   def get_search_results
-    puts " " * padding + "Enter the name of the movie you want to look up".ljust(width - padding)
-    print " " * padding
+    prompt_user("Enter the name of the movie you want to look up")
     command = gets.strip
-    print_search_results(command)
 
-    puts " " * padding + "Enter the number of the movie you want to read about".ljust(width - padding)
-    print " " * padding    
+    print_search_results(command, @omdb)
+
+    prompt_user("Enter the number of the movie you want to read about")
     command = gets.strip  
     while command.to_i == 0
       invalid
@@ -127,13 +126,5 @@ class UserInterface
     print_line("That is not a valid command. Please try again", {centered:true})
     print_divider("! ")
   end
-
-  def print_search_results(command)
-    @omdb.search(command)
-    @omdb.movies.each do |id, movie|
-      puts " " * padding + "#{id}: #{movie.title} (#{movie.year})"
-      print_divider("-")
-    end     
-  end  
 
 end
