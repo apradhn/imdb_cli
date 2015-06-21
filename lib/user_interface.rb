@@ -1,9 +1,3 @@
-require_relative "omdb.rb"
-require_relative "scraper.rb"
-require_relative "movie.rb"
-require_relative "../config/environment.rb"
-require_relative "concerns/printable.rb"
-
 class UserInterface
   attr_accessor :scraper, :omdb
   attr_reader :commands, :command_descriptions
@@ -13,10 +7,6 @@ class UserInterface
   def initialize
     @scraper = Scraper.new
     @omdb = Omdb.new
-    # @commands = ["help", "opening", "now playing", "coming soon", "search", "exit"]
-    # @command_descriptions = ["show list of commands", "show movies opening this week",
-    #  "show movies playing this week", "show movies opening next week", "search for a movie title",
-    #  "close application"]
      @commands = {
       help: "show list of commands",
       opening: "show movies opening this week",
@@ -25,6 +15,7 @@ class UserInterface
       search: "search for a movie title",
       exit: "close application"
      }
+    @showtimes = Showtimes.new
   end
 
   def call
@@ -70,8 +61,15 @@ class UserInterface
 
   def now_playing
     print_heading("Movies playing this week", "+")     
-    titles = @scraper.now_playing
-    print_titles(titles)
+    print_titles(@scraper.now_playing)
+    puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+    command = gets.strip
+    while command != "back"
+      @showtimes.showtimes(command)
+      puts "Enter a movie title for showtimes, or 'back' to return to main menu"
+      command = gets.strip
+    end
+    help
   end
 
   def coming_soon
@@ -81,24 +79,30 @@ class UserInterface
   end
 
   def search
-    movie = get_search_results
-    print_profile(movie)
+    prompt_user("Enter the name of the movie you want to look up")
+    command = gets.strip
+    @omdb.search(command)
+    print_search_results(command, @omdb)
 
+    puts "Enter the number of the movie you want read about"
+    command = gets.strip
+    movie = @omdb.look_up(command)
+
+    print_profile(movie)
+    
     command = ""
-    valid_commands = ["back", "trailer", "tomatoes"]
     while command != "back" 
       puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
-      print " " * padding         
+      print " " * 5         
       command = gets.strip
       if command == "trailer"
         movie.youtube
       elsif command == "tomatoes"
         print_tomatoes(movie.tomatoes, movie.title)
-      elsif !(valid_command?(command, valid_commands))
-        invalid
       end
     end
     help
+
   end
 
   def valid_command?(command, valid_commands)
@@ -108,14 +112,25 @@ class UserInterface
   def get_search_results
     prompt_user("Enter the name of the movie you want to look up")
     command = gets.strip
-
+    @omdb.search(command)
     print_search_results(command, @omdb)
 
-    prompt_user("Enter the number of the movie you want to read about")
-    command = gets.strip  
-    while command.to_i == 0
-      invalid
-      command = gets.strip
+    puts "Enter the number of the movie you want read about"
+    command = gets.strip
+    movie = @omdb.look_up(command)
+
+    print_profile(movie)
+
+    command = ""
+    while command != "back"
+      puts "Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search"
+      command = gets.strip          
+      case command
+        when "trailer"
+          movie.youtube
+        when "tomatoes"
+          print_tomatoes(movie.tomatoes, movie.title)  
+      end
     end
 
     movie = @omdb.look_up(command)    

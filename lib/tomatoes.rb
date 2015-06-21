@@ -1,6 +1,3 @@
-require_relative "../config/environment.rb"
-require_relative 'omdb.rb'
-
 class Tomatoes
   attr_accessor :meter, :image, :rating, :consensus
 

@@ -1,15 +1,10 @@
-require "open-uri"
-require "json"
-require "pry"
-require_relative "tomatoes"
-
 class Movie
   attr_accessor :title, :year, :id, :runtime, :genre, :director, :writer, :actors,
   :imdb_rating, :plot, :tomatoes
 
   def json
     @id = id
-    url = "http://www.omdbapi.com/?i=#{@id}&tomatoes=true"    
+    url = "http://www.omdbapi.com/?i=#{@id}&tomatoes=true"
     response = open(url)
     json = JSON.load(response)
     @runtime = json["Runtime"]
@@ -30,5 +25,4 @@ class Movie
     href = doc.css(".yt-lockup-title a").attribute("href")
     system("open", "https://www.youtube.com" + href)
   end
-
 end
