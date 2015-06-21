@@ -70,8 +70,12 @@ module Printable
       print " "*PADDING
     end
 
-    def print_line(text)
-      puts " " * PADDING + text
+    def print_line(text, options = {})
+      if options[:centered]
+        puts text.center(WIDTH + PADDING * 2)
+      else
+        puts " " * PADDING + text        
+      end
     end
 
     def print_hash(hash)

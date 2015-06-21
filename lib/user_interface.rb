@@ -124,9 +124,8 @@ class UserInterface
 
   def invalid
     print_divider("! ")
-    puts "That is not a valid command. Please try again".center(width + padding*2)
+    print_line("That is not a valid command. Please try again", {centered:true})
     print_divider("! ")
-    print " "*padding
   end
 
   def print_search_results(command)
