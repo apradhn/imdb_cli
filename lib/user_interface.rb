@@ -81,17 +81,9 @@ class UserInterface
   end
 
   def search
-    puts " " * padding + "Enter the name of the movie you want to look up".ljust(width - padding)
-    print " " * padding
-    command = gets.strip
-    print_search_results(command)
-
-    puts " " * padding + "Enter the number of the movie you want to read about".ljust(width - padding)
-    print " " * padding    
-    command = gets.strip  
-
-    movie = @omdb.look_up(command)
+    movie = get_search_results
     print_profile(movie)
+
     puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
     print " " * padding    
     command = gets.strip
@@ -101,14 +93,27 @@ class UserInterface
         when "trailer"  
           movie.youtube
         when "tomatoes"
-          # movie.tomatoes.print_attributes
           print_tomatoes(movie.tomatoes, movie.title)
+        when "exit"
+          break
       end
       puts parse_paragraph("Enter 'trailer' to watch trailer, 'tomatoes' for Rotten Tomatoes data, or 'back' to leave Search")
       print " " * padding    
       command = gets.strip
     end
     help
+  end
+
+  def get_search_results
+    puts " " * padding + "Enter the name of the movie you want to look up".ljust(width - padding)
+    print " " * padding
+    command = gets.strip
+    print_search_results(command)
+
+    puts " " * padding + "Enter the number of the movie you want to read about".ljust(width - padding)
+    print " " * padding    
+    command = gets.strip  
+    movie = @omdb.look_up(command)    
   end
 
   def invalid
