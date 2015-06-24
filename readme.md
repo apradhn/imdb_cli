@@ -142,6 +142,9 @@ Note: some macs may not be able to use this feature due to a openSSL issue.
 ### Rotten Tomatoes
 Enter `tomatoes` after picking a title, and your Mac's text-to-speech robot will speak the Rotten Tomatoes consensus of the title.
 
+## UI customization
+You can change the padding and width of the CLI by modifying th e `WIDTH` and `PADDING` constants in the Printable module. By default `WIDTH` and `PADDING` are set to 75 and 5, respectively.
+
 ## Resources
 * [Nokogiri](http://www.nokogiri.org/)
 * [OMDb API](http://www.omdbapi.com/)
