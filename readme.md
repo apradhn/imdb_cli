@@ -1,40 +1,30 @@
-# Intro
+#IMDB CLI
+#### by Abhijit Pradhan and Heather Petrow
+####for Flatiron Students Presents 6/23/15
 
-## Problem: What could we build with our current knowledge?
-- We couldn't build a website
-- Covered scraping and Object Oriented Design
-- Several labs involved Comman Line Interfaces
+IMDB CLI streamlines imdb.com into a simple, elegant command line interface. 
 
-## Solution: IMDB CLI
- - We both like movies
- - Scrapes the IMDB home page for movie listings
- - Collects information about movie titles from OMDB api
- - Provides User Interaction through a Command Line Interface
+## Running IMDB CLI
+To start using IMDB CLI, download the repository and run `$ ruby bin/runner.rb` to start the application.
 
-## Demo
+## Features
+### Opening, Now Playing, Coming Soon
+* To view movies opening this week, enter `opening`. IMDB CLI will display a list of movies opening this week. 
+* To view a list of movies opening next week, enter `coming soon`
+* To view a list of movies currently in theaters, enter `now playing`
+ *   In the now playing section, enter the name of one of the movies on the list to see a listing of New York City showtimes
+ 
+## Search
+From the main menu, type `search` to open the search interface. Enter a search term, and the app will return an ordered list of search results. Enter the corresponding number to read an imdb profile of a title.
+### Youtube Trailer
+After picking a title from search, enter `trailer` and the cli will open the title's trailer on Youtube in your default browser.
+Note: some macs may not be able to use this feature due to a openSSL issue.
+### Rotten Tomatoes
+Enter `tomatoes` after picking a title, and your Mac's text-to-speech robot will speak the Rotten Tomatoes consensus of the title.
 
-# Implementation
+## Resources
+* [Nokogiri](http://www.nokogiri.org/)
+* [OMDb API](http://www.omdbapi.com/)
 
-- scraper
-  - scrapes the imdb home page
-  - divided into opening, now playing, coming soon
-- showtimes
-- omdb
-  - queries the omdb api to get information about movies
-  - creates movie objects to pass to ui
-
-- rotten tomatoes and youtube
-  - rotten tomatoes class stores RT info and has a speak function
-  - movies class stores info about a movie and has a youtube function
-  - UI
-
-Difficulties
-- ascii, gem debugging, youtube
-Lessons
-- OOD, scraping, environment, experimentation, github collaboration
-
-Future Plans
-- find a gem for ascii that suited our needs, or create it ourselves
-- figuring out open ssl issue for youtube
-- future proof scraping so that if IMDB changes, it won't break
-- improve reliability of showtimes scraper
+## Thanks
+* [Flatiron School](http://flatironschool.com/)
