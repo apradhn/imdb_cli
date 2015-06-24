@@ -1,6 +1,6 @@
 module Printable
   # Recommended to set with and padding to odd numbers
-  WIDTH = 50
+  WIDTH = 75
   PADDING = 5
 
   module InstanceMethods
