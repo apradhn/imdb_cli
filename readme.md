@@ -1,5 +1,5 @@
 #IMDB CLI
-#### by Abhijit Pradhan and Heather Petrow
+#### by Abhijit Pradhan and [Heather Petrow](https://github.com/hpetrow)
 ####for Flatiron Students Presents 6/23/15
 
 IMDB CLI streamlines imdb.com into a simple, elegant command line interface. 
